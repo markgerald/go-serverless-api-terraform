@@ -4,11 +4,19 @@ import (
 	"go-serverless-api-terraform/internal/http/handlers"
 
 	"github.com/gin-gonic/gin"
+
+	// swagger
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	_ "go-serverless-api-terraform/docs"
 )
 
 // NewRouter builds the Gin engine and registers routes
 func NewRouter(h *handlers.Handler) *gin.Engine {
 	r := gin.Default()
+
+	// Swagger UI
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Orders routes
 	r.GET("/orders", h.ListOrders)

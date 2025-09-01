@@ -15,6 +15,13 @@ import (
 	"go-serverless-api-terraform/internal/server"
 )
 
+// @title Orders API
+// @version 1.0
+// @description API for managing orders and order items
+// @BasePath /
+// @schemes http https
+// @accept json
+// @produce json
 func main() {
 	cfg, err := config.Load()
 	if err != nil {

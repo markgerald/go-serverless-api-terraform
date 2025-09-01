@@ -4,6 +4,7 @@ cdktf.out/
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.*
+terraform.infra.tfstate.*
 crash.log
 .gen/
 

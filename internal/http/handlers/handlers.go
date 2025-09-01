@@ -45,6 +45,14 @@ type updateItemReq struct {
 }
 
 // Orders
+// ListOrders godoc
+// @Summary List orders
+// @Description Returns all orders
+// @Tags orders
+// @Produce json
+// @Success 200 {array} models.Order
+// @Failure 500 {object} map[string]string
+// @Router /orders [get]
 func (h *Handler) ListOrders(c *gin.Context) {
 	orders, err := h.repo.ListOrders(c.Request.Context())
 	if err != nil {
@@ -54,6 +62,17 @@ func (h *Handler) ListOrders(c *gin.Context) {
 	c.JSON(http.StatusOK, orders)
 }
 
+// CreateOrder godoc
+// @Summary Create order
+// @Description Creates a new order
+// @Tags orders
+// @Accept json
+// @Produce json
+// @Param order body createOrderReq true "Create order payload"
+// @Success 201 {object} models.Order
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /orders [post]
 func (h *Handler) CreateOrder(c *gin.Context) {
 	var req createOrderReq
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -75,6 +94,16 @@ func (h *Handler) CreateOrder(c *gin.Context) {
 	c.JSON(http.StatusCreated, order)
 }
 
+// GetOrder godoc
+// @Summary Get order
+// @Description Returns an order by ID
+// @Tags orders
+// @Produce json
+// @Param orderId path string true "Order ID"
+// @Success 200 {object} models.Order
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId} [get]
 func (h *Handler) GetOrder(c *gin.Context) {
 	id := c.Param("orderId")
 	order, err := h.repo.GetOrder(c.Request.Context(), id)
@@ -89,6 +118,19 @@ func (h *Handler) GetOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
+// UpdateOrder godoc
+// @Summary Update order
+// @Description Updates an existing order by ID
+// @Tags orders
+// @Accept json
+// @Produce json
+// @Param orderId path string true "Order ID"
+// @Param order body updateOrderReq true "Update order payload"
+// @Success 200 {object} models.Order
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId} [put]
 func (h *Handler) UpdateOrder(c *gin.Context) {
 	id := c.Param("orderId")
 	existing, err := h.repo.GetOrder(c.Request.Context(), id)
@@ -119,6 +161,14 @@ func (h *Handler) UpdateOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, existing)
 }
 
+// DeleteOrder godoc
+// @Summary Delete order
+// @Description Deletes an order by ID
+// @Tags orders
+// @Param orderId path string true "Order ID"
+// @Success 204 {string} string
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId} [delete]
 func (h *Handler) DeleteOrder(c *gin.Context) {
 	id := c.Param("orderId")
 	if err := h.repo.DeleteOrder(c.Request.Context(), id); err != nil {
@@ -129,6 +179,15 @@ func (h *Handler) DeleteOrder(c *gin.Context) {
 }
 
 // Items
+// ListItems godoc
+// @Summary List items of an order
+// @Description Returns all items for a given order
+// @Tags items
+// @Produce json
+// @Param orderId path string true "Order ID"
+// @Success 200 {array} models.OrderItem
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId}/items [get]
 func (h *Handler) ListItems(c *gin.Context) {
 	orderID := c.Param("orderId")
 	items, err := h.repo.ListOrderItems(c.Request.Context(), orderID)
@@ -139,6 +198,18 @@ func (h *Handler) ListItems(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
 
+// CreateItem godoc
+// @Summary Create item
+// @Description Creates a new item for a given order
+// @Tags items
+// @Accept json
+// @Produce json
+// @Param orderId path string true "Order ID"
+// @Param item body createItemReq true "Create item payload"
+// @Success 201 {object} models.OrderItem
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId}/items [post]
 func (h *Handler) CreateItem(c *gin.Context) {
 	orderID := c.Param("orderId")
 	// Validate order exists
@@ -181,6 +252,17 @@ func (h *Handler) CreateItem(c *gin.Context) {
 	c.JSON(http.StatusCreated, it)
 }
 
+// GetItem godoc
+// @Summary Get item
+// @Description Returns an item by ID for a given order
+// @Tags items
+// @Produce json
+// @Param orderId path string true "Order ID"
+// @Param itemId path string true "Item ID"
+// @Success 200 {object} models.OrderItem
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId}/items/{itemId} [get]
 func (h *Handler) GetItem(c *gin.Context) {
 	orderID := c.Param("orderId")
 	id := c.Param("itemId")
@@ -196,6 +278,20 @@ func (h *Handler) GetItem(c *gin.Context) {
 	c.JSON(http.StatusOK, it)
 }
 
+// UpdateItem godoc
+// @Summary Update item
+// @Description Updates an item by ID for a given order
+// @Tags items
+// @Accept json
+// @Produce json
+// @Param orderId path string true "Order ID"
+// @Param itemId path string true "Item ID"
+// @Param item body updateItemReq true "Update item payload"
+// @Success 200 {object} models.OrderItem
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId}/items/{itemId} [put]
 func (h *Handler) UpdateItem(c *gin.Context) {
 	orderID := c.Param("orderId")
 	id := c.Param("itemId")
@@ -238,6 +334,15 @@ func (h *Handler) UpdateItem(c *gin.Context) {
 	c.JSON(http.StatusOK, existing)
 }
 
+// DeleteItem godoc
+// @Summary Delete item
+// @Description Deletes an item by ID for a given order
+// @Tags items
+// @Param orderId path string true "Order ID"
+// @Param itemId path string true "Item ID"
+// @Success 204 {string} string
+// @Failure 500 {object} map[string]string
+// @Router /orders/{orderId}/items/{itemId} [delete]
 func (h *Handler) DeleteItem(c *gin.Context) {
 	orderID := c.Param("orderId")
 	id := c.Param("itemId")
