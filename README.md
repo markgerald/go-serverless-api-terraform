@@ -1,4 +1,4 @@
-# mark-go-lambda
+# go-serverless-api-terraform
 
 Go project with an Orders API and AWS infrastructure managed with Terraform (CDK for Terraform in Go).
 
