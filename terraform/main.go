@@ -35,7 +35,7 @@ func main() {
 
 	bucketPrefix := os.Getenv("S3_BUCKET_PREFIX")
 	if bucketPrefix == "" {
-		bucketPrefix = "mark-go-lambda-artifacts"
+		bucketPrefix = "go-lambda-artifacts"
 	}
 	env := os.Getenv("ENV")
 	if env == "" {
@@ -48,7 +48,7 @@ func main() {
 
 	lambdaName := os.Getenv("LAMBDA_NAME")
 	if lambdaName == "" {
-		lambdaName = "mark-go-lambda-api"
+		lambdaName = "go-lambda-api"
 	}
 	lambdaRuntime := os.Getenv("LAMBDA_RUNTIME")
 	if lambdaRuntime == "" {
