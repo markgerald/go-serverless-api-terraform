@@ -1,0 +1,17 @@
+# CDKTF / Terraform artifacts
+cdktf.out/
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.*
+terraform.infra.tfstate.*
+crash.log
+.gen/
+
+# Local environment
+.env
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
