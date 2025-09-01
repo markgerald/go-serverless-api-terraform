@@ -5,6 +5,7 @@ cdktf.out/
 terraform.tfstate
 terraform.tfstate.*
 crash.log
+.gen/
 
 # Local environment
 .env
